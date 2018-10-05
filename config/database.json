@@ -2,9 +2,9 @@
   "dialect": "mysql",
   "host": "",
   "port": 3306,
-  "userName": "",
-  "password": "",
-  "databaseName": "",
+  "userName": "root",
+  "password": "123456",
+  "databaseName": "demo_schema",
   "ssl": false,
   "timezone": "+08:00"
 }
