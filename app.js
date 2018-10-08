@@ -69,7 +69,7 @@ app.use(convert(body({
 })))
 
 // 设置渲染引擎
-app.use(views(__dirname + '/views', {//这里应该是包含了ejs和别的一些，这里把扩展给限定为ejs
+app.use(views(path.join(__dirname, './views'), {//这里应该是包含了ejs和别的一些，这里把扩展给限定为ejs
   extension: 'ejs'
 }))
 
