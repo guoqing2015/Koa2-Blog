@@ -6,7 +6,7 @@ const Admin = require('../models/admin.js');
  * @param ctx
  */
 exports.login = async(ctx) => {
-  await ctx.render('adminLogin', {
+  await ctx.render('admin/login', {
     title: '管理员登录',
   });
 };
@@ -56,7 +56,7 @@ exports.loginPost = async(ctx) => {
  */
 exports.logout = async(ctx) => {
   session.admin = null;
-  await ctx.render('admin', {
+  await ctx.render('admin/index', {
     title: '后台管理',
   });
 };
@@ -66,7 +66,8 @@ exports.logout = async(ctx) => {
  * @param ctx
  */
 exports.manage = async(ctx) => {
-  await ctx.render('admin', {
+  await ctx.render('admin/index', {
     title: '后台管理',
   });
 };
+

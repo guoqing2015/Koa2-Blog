@@ -9,6 +9,7 @@ const Topic = require('../controller/topic');
 const Admin = require('../controller/admin');
 const Message = require('../controller/message')
 const About = require('../controller/about')
+const Category = require('../controller/category')
 
 const router = new Router()
 
@@ -82,6 +83,11 @@ router
   .get('/admin', Admin.manage)
 
   .get('/admin/login', Admin.login)
+
+  .get('/admin/category', Category.category)
+
+  .post('/category/create', Category.createCategory)
+  .post('/category/delete', Category.deleteCategory)
 
   .post('/admin/login', Admin.loginPost)
 
