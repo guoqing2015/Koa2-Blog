@@ -86,6 +86,7 @@ router
 
   .get('/admin/category', Category.category)
 
+  .get('/categories/query', Category.queryCategories)
   .post('/category/create', Category.createCategory)
   .post('/category/delete', Category.deleteCategory)
 

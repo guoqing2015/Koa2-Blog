@@ -20,7 +20,9 @@ exports.destroyCategory = async (id) => {
   })
 }
 
-
+/**
+ * 分页查询分类
+ */
 exports.getCategorysAndCount = async(pageNum, pageSize, order)=> {
   if (!pageNum /*|| !order*/) {
     return [];
@@ -33,16 +35,11 @@ exports.getCategorysAndCount = async(pageNum, pageSize, order)=> {
   return categorys;
 };
 
-
-exports.getCategorysAndCount = async(pageNum, pageSize, order)=> {
-  if (!pageNum /*|| !order*/) {
-    return [];
-  }
-  let categorys = await Category.findAndCountAll({
-    offset: (pageNum - 1) * pageSize,
-    limit: pageSize,
-    // order: [order],
-  });
+/**
+ * 查询所有分类
+ */
+exports.findAllCategories = async()=> {
+  let categorys = await Category.findAll({ });
   return categorys;
 };
 

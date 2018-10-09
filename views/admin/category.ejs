@@ -1,20 +1,46 @@
-<button id="addCategory">新增分类</button>
+<button class="category-add" data-categoryid="0">新增分类</button>
 <h2>分类列表</h2>
-<ul id="categoryList">
-        <% for (var i = 0; i < categoryList.length; i++) { %>
-            <li>
-                    <%= categoryList[i].category_name %>
-                    <button class="category-delete" data-categoryid="<%= categoryList[i].id %>">删除</button>
-            </li>
-            <% } %>
+<ul>
+    <li>
+        <p>
+            <button class="category-add" data-categoryid="11">新增子分类</button>
+            <button class="category-delete" data-categoryid="33">删除</button>
+        </p>
+    </li>
 </ul>
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
 <script>
     $(function () {
-        $("#addCategory").click(function () {
+
+        function getCategories () {
+            $.ajax({
+                    url: '/categories/query',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                    },
+                    success: function (msg) {
+                        console.log(msg);
+                        if (msg.result) {
+                            var categories = msg.categories;
+                        } else {
+                        }
+                    },
+                    error: function () {
+                    }
+                })
+        }
+
+        getCategories();
+
+
+        $(".category-add").click(function () {
             var categoryname = window.prompt("输入分类名称");
+            var categoryId = $(this).attr("data-categoryid");
+
             if (categoryname != null && categoryname != "") {
 
                 $.ajax({
@@ -23,7 +49,7 @@
                     dataType: 'json',
                     data: {
                         name: categoryname,
-                        parent_id: 0
+                        parent_id: categoryId || 0
                     },
                     // processData: false,
                     // contentType: false,
@@ -44,29 +70,29 @@
 
 
 
-        $(".category-delete").bind('click', function() {
+        $(".category-delete").bind('click', function () {
             var categoryId = $(this).attr("data-categoryid");
             $.ajax({
-                    url: '/category/delete',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id: categoryId,
-                    },
-                    // processData: false,
-                    // contentType: false,
-                    success: function (msg) {
-                        console.log(msg);
-                        if (msg.result) {
-                            location.reload();
-                        } else {
-                            alert('删除失败')
-                        }
-                    },
-                    error: function () {
-                        alert('删除异常');
+                url: '/category/delete',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: categoryId,
+                },
+                // processData: false,
+                // contentType: false,
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.result) {
+                        location.reload();
+                    } else {
+                        alert('删除失败')
                     }
-                })
+                },
+                error: function () {
+                    alert('删除异常');
+                }
+            })
         });
     })
 </script>

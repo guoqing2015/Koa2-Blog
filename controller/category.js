@@ -18,7 +18,7 @@ moment.locale('zh-cn');
  * 查看文章，返回解析后的文章
  * @param ctx
  */
-exports.readTopic = async(ctx) => {
+exports.readTopic = async (ctx) => {
   let replyUserNames = [];
   let replies = [];
   let topic = {};
@@ -94,7 +94,7 @@ exports.readTopic = async(ctx) => {
  * @param ctx
  * @returns {*}
  */
-exports.createCategory = async(ctx) => {
+exports.createCategory = async (ctx) => {
   let message = {};
   message.result = false;
   try {
@@ -110,8 +110,7 @@ exports.createCategory = async(ctx) => {
     message.result = true;
     ctx.body = message;
     return;
-  }
-  catch (err) {
+  } catch (err) {
     message.message = '新增分类出错';
     ctx.body = message;
     return;
@@ -124,36 +123,49 @@ exports.createCategory = async(ctx) => {
  * @param ctx
  * @returns {*}
  */
-exports.deleteCategory = async(ctx) => {
+exports.deleteCategory = async (ctx) => {
   let message = {};
   message.result = false;
   try {
-    
+
 
     //在数据库新建主题
     await Category.destroyCategory(ctx.body.id);
     message.result = true;
     ctx.body = message;
     return;
-  }
-  catch (err) {
+  } catch (err) {
     message.message = '删除分类出错';
     ctx.body = message;
     return;
   }
 };
 
-
-
+/**
+ * 查询分类
+ */
+exports.queryCategories = async (ctx) => {
+  let message = {};
+  message.result = false;
+  try {
+    var categorys = await Category.findAllCategories();
+    message.result = true;
+    message.categorys = categorys;
+    ctx.body = message;
+  } catch (err) {
+    message.message = '删除分类出错';
+    ctx.body = message;
+  }
+}
 
 /**
  * 
  */
-exports.category = async(ctx) => {
-  var categorys =  await Category.getCategorysAndCount(1, 10);
+exports.category = async (ctx) => {
+  // var categorys =  await Category.getCategorysAndCount(1, 10);
   await ctx.render('admin/category', {
-    categoryList: categorys.rows,
-    categoryCount: categorys.count
+    // categoryList: categorys.rows,
+    // categoryCount: categorys.count
   });
 }
 
@@ -161,7 +173,7 @@ exports.category = async(ctx) => {
  * 编辑主题
  * @param ctx
  */
-exports.editTopic = async(ctx) => {
+exports.editTopic = async (ctx) => {
   let topic = {};
   if (typeof ctx.params.topicId !== 'undefined') {
     topic = await Topic.getTopicById(ctx.params.topicId);
@@ -181,15 +193,14 @@ exports.editTopic = async(ctx) => {
  * @param ctx
  * @returns {*}
  */
-exports.saveTopic = async(ctx) => {
+exports.saveTopic = async (ctx) => {
   let submitData = ctx.body;
   let message = {};
   try {
     await Topic.updateTopic(submitData.topicId, submitData.title, submitData.content);
     message.result = true;
     ctx.body = message;
-  }
-  catch (err) {
+  } catch (err) {
     throw (err, 400);
   }
 };
@@ -199,7 +210,7 @@ exports.saveTopic = async(ctx) => {
  * @param ctx
  * @returns {*}
  */
-exports.createReply = async(ctx) => {
+exports.createReply = async (ctx) => {
   let bodyData = ctx.body;
   let message = {};
 
@@ -234,7 +245,7 @@ exports.createReply = async(ctx) => {
   }
 };
 
-exports.getCreateTopic = async(ctx) => {
+exports.getCreateTopic = async (ctx) => {
   let position = {};
   if (typeof ctx.session.user !== 'undefined' && typeof ctx.session.user.id !== 'undefined') {
     position = 'topicCreate';
@@ -249,7 +260,7 @@ exports.getCreateTopic = async(ctx) => {
   }
 };
 
-exports.addReplySupport = async(ctx) => {
+exports.addReplySupport = async (ctx) => {
   let bodyData = ctx.body;
   let message = {};
 
@@ -267,18 +278,15 @@ exports.addReplySupport = async(ctx) => {
           message.support = await Reply.addSupport(bodyData.reply_id);
           //添加积分
           await User.addIntegration(bodyData.reply_author_id, 1);
-        }
-        else {
+        } else {
           message.support = await Reply.addSupport(bodyData.reply_id, false);
           //去除点赞的积分
           await User.addIntegration(bodyData.reply_author_id, -1);
         }
-      }
-      else {
+      } else {
         message.result = false;
       }
-    }
-    catch (error) {
+    } catch (error) {
       message.result = false;
       message.error = error;
     }
