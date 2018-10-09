@@ -1,11 +1,10 @@
 <button id="addCategory">新增分类</button>
 <h2>分类列表</h2>
-<%= JSON.stringify(categoryList, 2, 2) %>
-<ul>
+<ul id="categoryList">
         <% for (var i = 0; i < categoryList.length; i++) { %>
-            <li class="timeline-yellow">
+            <li>
                     <%= categoryList[i].category_name %>
-                </div>
+                    <button class="category-delete" data-categoryid="<%= categoryList[i].id %>">删除</button>
             </li>
             <% } %>
 </ul>
@@ -41,6 +40,33 @@
                     }
                 })
             }
-        })
+        });
+
+
+
+        $(".category-delete").bind('click', function() {
+            var categoryId = $(this).attr("data-categoryid");
+            $.ajax({
+                    url: '/category/delete',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: categoryId,
+                    },
+                    // processData: false,
+                    // contentType: false,
+                    success: function (msg) {
+                        console.log(msg);
+                        if (msg.result) {
+                            location.reload();
+                        } else {
+                            alert('删除失败')
+                        }
+                    },
+                    error: function () {
+                        alert('删除异常');
+                    }
+                })
+        });
     })
 </script>
