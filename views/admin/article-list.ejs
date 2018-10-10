@@ -70,6 +70,9 @@
                     case "page":
                         return page;
                 }
+            },
+            pageUrl: function(type, page, current){
+                return "/admin/article/list?pagesize=5&pagenum="+page;
             }
         });
 
