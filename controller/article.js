@@ -6,8 +6,14 @@ const moment = require('moment');
 
 
 exports.queryArticles = async (ctx) => {
+  var param = {
+    pageSize: parseInt(ctx.query.pagesize),
+    pageNum: parseInt(ctx.query.pagenum)
+  }
+  var result = await Article.getArticlesAndCount(param);
   await ctx.render('admin/article-list', {
-
+    articles: result.rows,
+    count: result.count
   });
 }
 
@@ -26,12 +32,12 @@ exports.createArticle = async (ctx) => {
   let message = {};
   message.result = false;
   try {
-    let data = {
+    let param = {
       title: ctx.body.title,
       content: ctx.body.content,
       category_id: ctx.body.category_id,
     };
-    let article = await Article.createArticle(data);
+    let article = await Article.createArticle(param);
     message.result = true;
     message.item = article;
     ctx.body = message;

@@ -1,33 +1,57 @@
-<ul class="list-group">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Morbi leo risus</li>
-    <li class="list-group-item">Porta ac consectetur ac</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
+<a href="/admin/article/edit">新增</a>
+<br>
+<br>
+<br>
+
+<%= count %>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>title</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% for (var i = 0; i < articles.length; i++) { %>
+        <tr>
+            <td scope="row">
+                <%= i + 1  %>
+            </td>
+            <td>
+                <%= articles[i].title %>
+            </td>
+        </tr>
+        <% } %>
+
+    </tbody>
+</table>
+
+
 
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
     </ul>
-  </nav>
+</nav>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -36,75 +60,45 @@
 <script>
     $(function () {
 
-        function getCategories () {
-            $.ajax({
-                    url: '/categories/query',
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                    },
-                    success: function (msg) {
-                        console.log(msg);
-                        if (msg.result) {
-                            var categories = msg.categories;
+        // function getCategories () {
+        //     $.ajax({
+        //             url: '/categories/query',
+        //             type: 'get',
+        //             dataType: 'json',
+        //             data: {
+        //             },
+        //             success: function (msg) {
+        //                 console.log(msg);
+        //                 if (msg.result) {
+        //                     var categories = msg.categories;
 
-                            var partitionCategories = _.partition(categories, function(v) {
-                                return v.parent_id == 0
-                            });
+        //                     var partitionCategories = _.partition(categories, function(v) {
+        //                         return v.parent_id == 0
+        //                     });
 
-                            console.log('partitionCategories', partitionCategories)
-                            var firstCategories = partitionCategories[0];
-                            var otherCategories = partitionCategories[1];
+        //                     console.log('partitionCategories', partitionCategories)
+        //                     var firstCategories = partitionCategories[0];
+        //                     var otherCategories = partitionCategories[1];
 
-                            console.log('categories', categories)
+        //                     console.log('categories', categories)
 
-                            _.map(firstCategories, function(v) {
-                                v.children = [];
-                                return v;
-                            });
-                            // console.log('firstCategories', firstCategories)
-                            
-                        } else {
-                        }
-                    },
-                    error: function () {
-                    }
-                })
-        }
+        //                     _.map(firstCategories, function(v) {
+        //                         v.children = [];
+        //                         return v;
+        //                     });
+        //                     // console.log('firstCategories', firstCategories)
 
-        getCategories();
+        //                 } else {
+        //                 }
+        //             },
+        //             error: function () {
+        //             }
+        //         })
+        // }
+
+        // getCategories();
 
 
-        $(".category-add").click(function () {
-            var categoryname = window.prompt("输入分类名称");
-            var categoryId = $(this).attr("data-categoryid");
-
-            if (categoryname != null && categoryname != "") {
-
-                $.ajax({
-                    url: '/category/create',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        name: categoryname,
-                        parent_id: categoryId || 0
-                    },
-                    // processData: false,
-                    // contentType: false,
-                    success: function (msg) {
-                        console.log(msg);
-                        if (msg.result) {
-                            location.reload();
-                        } else {
-                            alert('新增失败')
-                        }
-                    },
-                    error: function () {
-                        alert('新增异常');
-                    }
-                })
-            }
-        });
 
 
 
