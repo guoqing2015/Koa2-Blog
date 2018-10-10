@@ -13,7 +13,9 @@ exports.queryArticles = async (ctx) => {
   var result = await Article.getArticlesAndCount(param);
   await ctx.render('admin/article-list', {
     articles: result.rows,
-    count: result.count
+    count: result.count,
+    pageSize: param.pageSize,
+    pageNum: param.pageNum
   });
 }
 

@@ -32,22 +32,9 @@
 
 
 <nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
+    <ul class="pagination" id="pageLimit">
+
+
     </ul>
 </nav>
 
@@ -55,10 +42,38 @@
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="/bootstrap-paginator.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
 
 <script>
     $(function () {
+        var pageSize = parseInt("<%= pageSize %>");
+        var pageNum = parseInt("<%= pageNum %>");
+        var count = parseInt("<%= count %>");
+        $('#pageLimit').bootstrapPaginator({
+            currentPage: pageNum,
+            totalPages: Math.ceil(count/pageSize),
+            size: "normal",
+            bootstrapMajorVersion: 3,
+            alignment: "right",
+            numberOfPages: 5,
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "首页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "末页";
+                    case "page":
+                        return page;
+                }
+            }
+        });
+
+
 
         // function getCategories () {
         //     $.ajax({
