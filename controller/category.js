@@ -148,9 +148,9 @@ exports.queryCategories = async (ctx) => {
   let message = {};
   message.result = false;
   try {
-    var categorys = await Category.findAllCategories();
+    var categories = await Category.findAllCategories();
     message.result = true;
-    message.categorys = categorys;
+    message.categories = categories;
     ctx.body = message;
   } catch (err) {
     message.message = '删除分类出错';
@@ -162,10 +162,10 @@ exports.queryCategories = async (ctx) => {
  * 
  */
 exports.category = async (ctx) => {
-  // var categorys =  await Category.getCategorysAndCount(1, 10);
+  // var categories =  await Category.getcategoriesAndCount(1, 10);
   await ctx.render('admin/category', {
-    // categoryList: categorys.rows,
-    // categoryCount: categorys.count
+    // categoryList: categories.rows,
+    // categoryCount: categories.count
   });
 }
 

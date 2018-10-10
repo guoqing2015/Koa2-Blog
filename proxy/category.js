@@ -2,11 +2,11 @@ const Category = require('../models/category');
 const Topic = require('../models/topic');
 const Moment = require('moment');
 
-exports.createCategory = async (data) => {
-  if (!data) {
+exports.createCategory = async (params) => {
+  if (!params) {
     return {};
   }
-  return await Category.create(data);
+  return await Category.create(params);
 }
 
 exports.destroyCategory = async (id) => {
@@ -23,24 +23,24 @@ exports.destroyCategory = async (id) => {
 /**
  * 分页查询分类
  */
-exports.getCategorysAndCount = async(pageNum, pageSize, order)=> {
+exports.getcategoriesAndCount = async(pageNum, pageSize, order)=> {
   if (!pageNum /*|| !order*/) {
     return [];
   }
-  let categorys = await Category.findAndCountAll({
+  let categories = await Category.findAndCountAll({
     offset: (pageNum - 1) * pageSize,
     limit: pageSize,
     // order: [order],
   });
-  return categorys;
+  return categories;
 };
 
 /**
  * 查询所有分类
  */
 exports.findAllCategories = async()=> {
-  let categorys = await Category.findAll({ });
-  return categorys;
+  let categories = await Category.findAll({ });
+  return categories;
 };
 
 
