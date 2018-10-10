@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+
 <a href="/admin/article/edit">新增</a>
 <br>
 <br>
@@ -38,7 +40,6 @@
     </ul>
 </nav>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -52,7 +53,7 @@
         var count = parseInt("<%= count %>");
         $('#pageLimit').bootstrapPaginator({
             currentPage: pageNum,
-            totalPages: Math.ceil(count/pageSize),
+            totalPages: Math.ceil(count / pageSize),
             size: "normal",
             bootstrapMajorVersion: 3,
             alignment: "right",
@@ -71,8 +72,8 @@
                         return page;
                 }
             },
-            pageUrl: function(type, page, current){
-                return "/admin/article/list?pagesize=5&pagenum="+page;
+            pageUrl: function (type, page, current) {
+                return "/admin/article/list?pagesize=5&pagenum=" + page;
             }
         });
 
