@@ -1,0 +1,19 @@
+#app-sidebar {
+    position: fixed;
+    top: 0px;;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, .2);
+    z-index: 99;
+    width: 200px;
+}
+
+#app-container {
+    background: #f2f2f2;
+    width: auto;
+    margin: 0 0 0 200px;
+    padding-bottom: 50px;
+    min-height: 100vh;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
