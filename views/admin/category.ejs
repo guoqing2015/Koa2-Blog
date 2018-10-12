@@ -1,53 +1,52 @@
-<button class="category-add" data-categoryid="0">新增分类</button>
-<h2>分类列表</h2>
-<ul>
-    <li>
-        <p>
-            <button class="category-add" data-categoryid="11">新增子分类</button>
-            <button class="category-delete" data-categoryid="33">删除</button>
-        </p>
-    </li>
-</ul>
+<% include header %>
+<% include sidebar %>
+<div id="app-container">
+    <button class="category-add" data-categoryid="0">新增分类</button>
+    <h2>分类列表</h2>
+    <ul>
+        <li>
+            <p>
+                <button class="category-add" data-categoryid="11">新增子分类</button>
+                <button class="category-delete" data-categoryid="33">删除</button>
+            </p>
+        </li>
+    </ul>
+</div>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
 <script>
     $(function () {
 
-        function getCategories () {
+        function getCategories() {
             $.ajax({
-                    url: '/categories/query',
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                    },
-                    success: function (msg) {
-                        console.log(msg);
-                        if (msg.result) {
-                            var categories = msg.categories;
+                url: '/categories/query',
+                type: 'get',
+                dataType: 'json',
+                data: {},
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.result) {
+                        var categories = msg.categories;
 
-                            var partitionCategories = _.partition(categories, function(v) {
-                                return v.parent_id == 0
-                            });
+                        var partitionCategories = _.partition(categories, function (v) {
+                            return v.parent_id == 0
+                        });
 
-                            console.log('partitionCategories', partitionCategories)
-                            var firstCategories = partitionCategories[0];
-                            var otherCategories = partitionCategories[1];
+                        console.log('partitionCategories', partitionCategories)
+                        var firstCategories = partitionCategories[0];
+                        var otherCategories = partitionCategories[1];
 
-                            console.log('categories', categories)
+                        console.log('categories', categories)
 
-                            _.map(firstCategories, function(v) {
-                                v.children = [];
-                                return v;
-                            });
-                            // console.log('firstCategories', firstCategories)
-                            
-                        } else {
-                        }
-                    },
-                    error: function () {
-                    }
-                })
+                        _.map(firstCategories, function (v) {
+                            v.children = [];
+                            return v;
+                        });
+                        // console.log('firstCategories', firstCategories)
+
+                    } else {}
+                },
+                error: function () {}
+            })
         }
 
         getCategories();
@@ -112,3 +111,4 @@
         });
     })
 </script>
+<% include footer %>
