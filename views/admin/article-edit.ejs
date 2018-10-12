@@ -1,50 +1,50 @@
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">标题</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="title" placeholder="标题">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="content" class="col-sm-2 control-label">内容</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" rows="3"  id="content"  placeholder="内容"></textarea>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">标签</label>
-        <div class="col-sm-10">
-            <select class="form-control" id="category_id">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> 是否发布
-                </label>
+<% include header %>
+<% include sidebar %>
+<div id="app-container">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">标题</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" placeholder="标题">
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button id="save" type="submit" class="btn btn-default">保存</button>
+        <div class="form-group">
+            <label for="content" class="col-sm-2 control-label">内容</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="content" placeholder="内容"></textarea>
+            </div>
         </div>
-    </div>
-</form>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">标签</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="category_id">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 是否发布
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="save" type="submit" class="btn btn-default">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
 
 <script>
     $(function () {
@@ -85,59 +85,35 @@
 
         $("#save").click(function (e) {
             e.preventDefault();
-                var title = $("#title").val();
-                var content = $("#content").val();
-                var category_id = $("#category_id").val();
-                $.ajax({
-                    url: '/article/create',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        title: title,
-                        content: content,
-                        category_id: 0,
-                    },
-                    // processData: false,
-                    // contentType: false,
-                    success: function (msg) {
-                        console.log(msg);
-                        if (msg.result) {
-                            alert('新增成功')
-                        } else {
-                            alert('新增失败')
-                        }
-                    },
-                    error: function () {
-                        alert('新增异常');
+            var title = $("#title").val();
+            var content = $("#content").val();
+            var category_id = $("#category_id").val();
+            $.ajax({
+                url: '/article/create',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    title: title,
+                    content: content,
+                    category_id: 0,
+                },
+                // processData: false,
+                // contentType: false,
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.result) {
+                        alert('新增成功')
+                    } else {
+                        alert('新增失败')
                     }
-                })
+                },
+                error: function () {
+                    alert('新增异常');
+                }
+            })
         });
 
 
-
-        // $(".category-delete").bind('click', function () {
-        //     var categoryId = $(this).attr("data-categoryid");
-        //     $.ajax({
-        //         url: '/category/delete',
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         data: {
-        //             id: categoryId,
-        //         },
-        //         // processData: false,
-        //         // contentType: false,
-        //         success: function (msg) {
-        //             console.log(msg);
-        //             if (msg.result) {
-        //                 location.reload();
-        //             } else {
-        //                 alert('删除失败')
-        //             }
-        //         },
-        //         error: function () {
-        //             alert('删除异常');
-        //         }
-        //     })
-        // });
     })
 </script>
+<% include footer %>
