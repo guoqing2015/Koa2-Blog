@@ -19,6 +19,7 @@ updateDOTA2.update();
 import user from './routes/user';
 import topic from './routes/topic';
 import index from './routes/index';
+import admin from './routes/admin';
 
 const app = new Koa();
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -80,6 +81,7 @@ app.use(convert(serve(__dirname + '/public/')))
 app.use(index.routes())
 app.use(user.routes())
 app.use(topic.routes())
+app.use('/admin', admin.routes())
 
 app.use(async(ctx) => {
   if (ctx.status === 404) {
