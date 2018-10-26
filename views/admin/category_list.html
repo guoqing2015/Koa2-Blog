@@ -1,10 +1,12 @@
-{% extends 'layout.html' %}
-{% block main%}
+{% extends "./layout.html" %}
+{% block main %}
 <ol class="breadcrumb">
     <li><a href="/admin">管理首页</a></li>
     <li><span>分类首页</span></li>
 </ol>
 <h3>分类列表</h3>
+
+{{ count }}
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
@@ -19,5 +21,5 @@
     </tr>
     {% endfor %}
 </table>
-{% include 'page.html' %}
+{% include "page.html" %}
 {% endblock %}
