@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 const Article = require('../proxy/article');
 const Category = require('../proxy/category');
 
@@ -13,7 +14,12 @@ exports.articleListPage = async (ctx) => {
     const result = await Article.getArticlesAndCount(page, 10);
     var count = result.count;
     pages = Math.ceil(count / limit); //向上取整
-    console.log(result.rows)
+    const articles = result.rows;
+    for (let article of articles) {
+      article.create_time = moment(article.createdAt).format("YYYY-MM-DD HH:mm:ss");
+      let articleCategory = await Category.getCategoryById(article.category_id);
+      article.category = articleCategory;
+    }
     await ctx.render('admin/article_list.html', {
       articles: result.rows,
       count: count,

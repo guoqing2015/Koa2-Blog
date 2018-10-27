@@ -23,9 +23,9 @@
     <tr>
         <td>{{article.id}}</td>
         <td>{{article.title}}</td>
-        <td>{{article.category_id}}</td>
-        <td>{{article}}</td>
-        <td>{{article.create_at}}</td>
+        <td>{{article.category.category_name}}</td>
+        <td>作者</td>
+        <td>{{article.create_time}}</td>
         {# <td>{{article.addTime|date('Y-m-d H:i:s',-8*60)}}</td> #}
         <td>{{article.pv}}</td>
         <td><a href="/admin/article/edit?id={{article.id}}">修改</a>|<a href="/admin/article/delete?id={{article.id}}">删除</a></td>
