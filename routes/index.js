@@ -85,7 +85,7 @@ router
 
   .get('/admin/login', Admin.login)
 
-  .get('/admin/category/list', Category.category)
+  // .get('/admin/category/list', Category.category)
 
   .get('/categories/query', Category.queryCategories)
   .post('/category/create', Category.createCategory)
