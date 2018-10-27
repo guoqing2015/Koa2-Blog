@@ -19,18 +19,18 @@ const Article = sequelize.define('article', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  // pv: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   defaultValue: 0,
-  //   comment: "浏览数"
-  // },
-  // reply_count: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   defaultValue: 0,
-  //   comment: "回复数"
-  // },
+  pv: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: "浏览数"
+  },
+  reply_count: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: "回复数"
+  },
   // allow_comment: {
   //   type: Sequelize.INTEGER,
   //   allowNull: false,
@@ -58,6 +58,8 @@ const Article = sequelize.define('article', {
   // }
 });
 
-Article.sync(); //创建表
+Article.sync({
+  // force: true
+}); //创建表
 
 module.exports = Article;

@@ -1,0 +1,36 @@
+{% extends "./admin/layout.html" %}
+{% block main%}
+<ol class="breadcrumb">
+    <li><a href="/admin">管理首页</a></li>
+    <li><span>文章列表</span></li>
+</ol>
+<h3>文章列表</h3>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>ID</th>
+        <th>内容标题</th>
+        <th>分类名称</th>
+        <th>作者</th>
+        <th>添加时间</th>
+        <th>阅读量</th>
+        <th>操作</th>
+    </tr>
+
+   
+   
+
+    {% for article in articles %}
+    <tr>
+        <td>{{article.id}}</td>
+        <td>{{article.title}}</td>
+        <td>{{article.category_id}}</td>
+        <td>{{article}}</td>
+        <td>{{article.create_at}}</td>
+        {# <td>{{article.addTime|date('Y-m-d H:i:s',-8*60)}}</td> #}
+        <td>{{article.pv}}</td>
+        <td><a href="/admin/article/edit?id={{article.id}}">修改</a>|<a href="/admin/article/delete?id={{article.id}}">删除</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% include "./admin/page.html" %}
+{% endblock %}

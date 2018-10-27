@@ -2,52 +2,74 @@
 const Article = require('../proxy/article');
 const Category = require('../proxy/category');
 
-const moment = require('moment');
-
-
-exports.queryArticles = async (ctx) => {
-  var param = {
-    pageSize: parseInt(ctx.query.pagesize),
-    pageNum: parseInt(ctx.query.pagenum)
+/**
+ * 文章列表页面
+ */
+exports.articleListPage = async (ctx) => {
+  try {
+    const page = Number(ctx.query.page || 1);
+    const limit = 10;
+    var pages = 0;
+    const result = await Article.getArticlesAndCount(page, 10);
+    var count = result.count;
+    pages = Math.ceil(count / limit); //向上取整
+    console.log(result.rows)
+    await ctx.render('admin/article_list.html', {
+      articles: result.rows,
+      count: count,
+      page: page,
+      pages: pages,
+      limit: limit
+    });
+  } catch (err) {
+    ctx.throw(err);
   }
-  var result = await Article.getArticlesAndCount(param);
-  await ctx.render('admin/article-list', {
-    articles: result.rows,
-    count: result.count,
-    pageSize: param.pageSize,
-    pageNum: param.pageNum
-  });
 }
 
-exports.editArticle = async (ctx) => {
-  await ctx.render('admin/article-edit', {
-
-  });
+/**
+ * 文章列表页面
+ */
+exports.articleAddPage = async (ctx) => {
+  try {
+    
+    const categories = await Category.getAllCategories();
+    await ctx.render('admin/article_add.html', {
+      categories: categories
+    });
+  } catch (err) {
+    ctx.throw(err);
+  }
 }
-
 
 
 /**
  * 新建文章
+ * @param ctx
+ * @returns {*}
  */
 exports.createArticle = async (ctx) => {
-  let message = {};
-  message.result = false;
   try {
-    let param = {
+ 
+    let title = ctx.body.title;
+    let content = ctx.body.content;
+    if (!title) {
+      await ctx.render('admin/error', {
+        message: '文章标题不能为空'
+      });
+      return;
+    }
+    const res = await Article.createNewArticle({
       title: ctx.body.title,
       content: ctx.body.content,
-      category_id: ctx.body.category_id,
-    };
-    let article = await Article.createArticle(param);
-    message.result = true;
-    message.item = article;
-    ctx.body = message;
+      category_id: ctx.body.category_id
+    });
+    await ctx.render('admin/success', {
+      message: '文章新建成功',
+      url: '/admin/article/list'
+    }) 
   } catch (err) {
-    console.log('error    333333')
-    message.message = '新增文章出错';
-    ctx.body = message;
+    await ctx.render('admin/error', {
+      message: err.message
+    })
   }
 };
-
-

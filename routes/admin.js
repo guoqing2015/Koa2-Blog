@@ -1,9 +1,9 @@
 'use strict';
 import Router from 'koa-router'
-import { deleteCategory } from '../controller/category';
-
+// import { deleteCategory } from '../controller/category';
 const router = new Router()
 const Category = require('../controller/category')
+const Article = require('../controller/article')
 // var User=require('../models/user');
 // var Category=require('../models/category');
 // var Content=require('../models/content');
@@ -201,11 +201,14 @@ router.post('/admin/category/edit', Category.editCategory)
 /*
  * 分类删除
  * */
-router.get('/admin/category/delete', Category.deleteCategory)
+router.get('/admin/category/delete', Category.deleteCategory);
 
-// /*
-//  *内容首页
-//  * */
+
+
+/*
+ *文章列表
+ * */
+router.get('/admin/article/list', Article.articleListPage);
 // router.get('/content',function (req,res) {
 //     var page=Number(req.query.page || 1);
 //     var limit=5;
@@ -241,21 +244,15 @@ router.get('/admin/category/delete', Category.deleteCategory)
 // })
 
 // /*
-//  *内容添加
+//  *文章添加
 //  * */
-// router.get('/content/add',function (req,res) {
-//     //读取所有分类信息
-//     Category.find().then(function (categories) {
-//         res.render('admin/content_add',{
-//             userInfo:req.userInfo,
-//             categories:categories
-//         })
-//     })
+router.get('/admin/article/add', Article.articleAddPage)
+router.post('/admin/article/add', Article.createArticle)
 
 
 // })
 // /*
-//  *内容添加保存
+//  *文章添加保存
 //  * */
 // router.post('/content/add',function (req,res) {
 //     console.log(req);

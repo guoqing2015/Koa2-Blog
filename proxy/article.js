@@ -3,15 +3,20 @@ const Moment = require('moment');
 
 
 /**
- * 创建文章
+ * 新增文章
  */
-exports.getArticlesAndCount = async (params) => {
-  if (!params) {
-    return {};
-  }
+exports.createNewArticle = async (params) => {
+  return await Article.create(params);
+}
+
+
+/**
+ * 获取所有文章
+ */
+exports.getArticlesAndCount = async  (page, limit, order) => {
   return await Article.findAndCountAll({
-    offset: (params.pageNum - 1) * params.pageSize,
-    limit: params.pageSize,
+    offset: (page - 1) * limit,
+    limit: limit,
     // order: [order],
   });
 }

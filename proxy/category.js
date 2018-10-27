@@ -3,7 +3,7 @@ const Topic = require('../models/topic');
 const Moment = require('moment');
 
 /**
- * 新增风雷
+ * 新增分类
  */
 exports.createNewCategory = async (params) => {
   const result = await Category.create(params);
@@ -21,10 +21,18 @@ exports.destroyCategoryById = async (id) => {
   })
 }
 
+
+/**
+ * 查询所有分类
+ */
+exports.getAllCategories = async () => {
+    return await Category.findAll();
+}
+
 /**
  * 分页查询分类
  */
-exports.getcategoriesAndCount = async (page, limit, order) => {
+exports.getCategoriesAndCount = async (page, limit, order) => {
   let result = await Category.findAndCountAll({
     offset: (page - 1) * limit,
     limit: limit,
@@ -46,7 +54,7 @@ exports.getCategoryById = async (id) => {
 };
 
 /**
- * 
+ * 更新分类名称
  */
 exports.updateCategoryName = async (id, category_name) => {
   let result = await Category.update({
