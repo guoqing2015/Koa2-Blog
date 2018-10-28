@@ -3,7 +3,7 @@ import Router from 'koa-router'
 // import { deleteCategory } from '../controller/category';
 const router = new Router()
 const Category = require('../controller/category')
-const Article = require('../controller/article')
+const Post = require('../controller/post')
 // var User=require('../models/user');
 // var Category=require('../models/category');
 // var Content=require('../models/content');
@@ -208,7 +208,7 @@ router.get('/admin/category/delete', Category.deleteCategory);
 /*
  *文章列表
  * */
-router.get('/admin/article/list', Article.articleListPage);
+router.get('/admin/post/list', Post.postListPage);
 // router.get('/content',function (req,res) {
 //     var page=Number(req.query.page || 1);
 //     var limit=5;
@@ -246,8 +246,8 @@ router.get('/admin/article/list', Article.articleListPage);
 // /*
 //  *文章添加
 //  * */
-router.get('/admin/article/add', Article.articleAddPage)
-router.post('/admin/article/add', Article.createArticle)
+router.get('/admin/post/add', Post.postAddPage)
+router.post('/admin/post/add', Post.createPost)
 
 
 // })
@@ -284,9 +284,11 @@ router.post('/admin/article/add', Article.createArticle)
 //         })
 //     })
 // })
-// /*
-// * 内容修改
-// * */
+router.get('/admin/post/edit', Post.postEditPage)
+router.post('/admin/post/edit', Post.editPost)
+/*
+* 内容修改
+* */
 // router.get('/content/edit',function (req,res) {
 //     var id=req.query.id || '';
 //     var categories=[];
@@ -348,9 +350,10 @@ router.post('/admin/article/add', Article.createArticle)
 //     })
 
 // })
-// /*
-//  * 内容删除
-//  * */
+/*
+ * 文章删除
+ * */
+router.get('/admin/post/delete', Post.deletePost)
 // router.get('/content/delete',function (req,res) {
 //     var id=req.query.id || '';
 //     Content.remove({

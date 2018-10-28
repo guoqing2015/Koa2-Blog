@@ -2,7 +2,7 @@
 const sequelize = require("./sequelize.js")
 const Sequelize = require('sequelize')
 
-const Article = sequelize.define('article', {
+const Post = sequelize.define('post', {
   // user_id: {
   //   type: Sequelize.INTEGER,
   //   allowNull: false,
@@ -58,8 +58,8 @@ const Article = sequelize.define('article', {
   // }
 });
 
-Article.sync({
+Post.sync({
   // force: true
 }); //创建表
 
-module.exports = Article;
+module.exports = Post;

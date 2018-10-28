@@ -33,6 +33,7 @@ const nunjucks = require('nunjucks')
 
 
 import admin from './routes/admin';
+import blog from './routes/blog';
 // const admin = require('./routes/admin')
 // console.log('admin', admin)
 // const users = require('./routes/users')
@@ -127,9 +128,11 @@ app.use(async (ctx, next) => {
 
 
 // routes
+// https://www.jianshu.com/p/fef91266a44c
 // app.use(index.routes(), index.allowedMethods())
 // app.use(users.routes(), users.allowedMethods())
-app.use(admin.routes())
+app.use(admin.routes(), admin.allowedMethods());
+app.use(blog.routes(), blog.allowedMethods());
 // require('./routes')(app)
 
 

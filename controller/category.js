@@ -50,7 +50,6 @@ exports.editCategory = async (ctx) => {
       }
       return;
     }
-    //在数据库新建主题
     const res = await Category.updateCategoryName(data.id, data.category_name);
     if (res.length == 1) {
       await ctx.render('admin/success', {
