@@ -49,7 +49,8 @@ exports.createUser = async(user) => {
   if (!user) {
     return {};
   }
-  return await User.create(user);
+  var user = await User.create(user);
+  return user;
 };
 
 exports.updateUser = async(id, info) => {

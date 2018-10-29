@@ -3,6 +3,41 @@ const moment = require('moment');
 const Post = require('../proxy/post');
 const Category = require('../proxy/category');
 
+/**
+ * 重置到文章页
+ */
+exports.getRedirectPosts = async ctx => {
+  ctx.redirect('/posts')
+}
+
+
+/**
+ * 文章页
+ */
+exports.getPosts = async (ctx) => {
+  try {
+    let page = ctx.query.body.page;
+    const res = await Post.findPostByUserPage(page);
+    ctx.render('blog/posts', {
+      session: ctx.session,
+      posts: res,
+      postsLength: postCount,
+      postsPageLength: Math.ceil(postCount / 10),
+    })
+  } catch (err) {
+    ctx.body = {
+      code: 500,
+      err: err.message
+    }
+  }
+}
+
+
+
+
+
+
+
 
 /**
  * 新建文章

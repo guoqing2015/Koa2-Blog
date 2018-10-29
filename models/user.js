@@ -20,15 +20,6 @@ const User = sequelize.define('user', {
     gender: {
       type: Sequelize.STRING
     },
-    signature: {
-      type: Sequelize.STRING
-    },
-    personalWeb: {
-      type: Sequelize.STRING
-    },
-    GitHub: {
-      type: Sequelize.STRING
-    },
     avatarUrl: {
       type: Sequelize.STRING,
       defaultValue: 'http://res.cloudinary.com/hezf/image/upload/v1467186691/vwuj8a3tpuqoy5fzuzlw.png'

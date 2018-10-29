@@ -10,12 +10,14 @@ const json = require('koa-json')
 
 //jsonwebtoken在服务端生成token返回给客户端
 // const jwt = require('koa-jwt')
+// const session =  require("koa-session");
+import session from "koa-session2";
 
 const onerror = require('koa-onerror')
 
 // 对于POST请求的处理，koa-bodyparser中间件可以把koa2上下文的formData数据解析到ctx.request.body中
-// const bodyparser = require('koa-bodyparser')
-const body = require('koa-better-body');
+const bodyparser = require('koa-bodyparser')
+// const body = require('koa-better-body');
 
 // Development style logger middleware for koa。
 const logger = require('koa-logger')
@@ -34,21 +36,41 @@ const nunjucks = require('nunjucks')
 
 import admin from './routes/admin';
 import blog from './routes/blog';
+import auth from './routes/auth';
 // const admin = require('./routes/admin')
 // console.log('admin', admin)
 // const users = require('./routes/users')
 
+
+/**
+ * 默认关闭，需同上面的Store一起关掉注释
+ * 使用自定义存储，这里面用的是Redis缓存，好处是
+ * session 存放在内存中不方便进程间共享，因此可以使用 redis 等缓存来存储 session。m
+ * 假设你的机器是4核的，你使用了4个进程在跑同一个node web服务，当用户访问进程1时，他被设置了一些数据当做session存在内存中。
+ * 而下一次访问时，他被负载均衡到了进程2，则此时进程2的内存中没有他的信息，认为他是个新用户。这就会导致用户在我们服务中的状态不一致。
+ */
+app.use(session({
+  // key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+  //store: new Store(),
+  //cookie的保存期为一天
+  maxAge: 1000 * 60 * 60 * 24,
+}));
+
+
 // error handler
 onerror(app)
 
-app.use(convert(body({
-  uploadDir: path.join(__dirname, 'uploads'),
-  keepExtensions: true
-})))
+// app.use(convert(body({
+//   uploadDir: path.join(__dirname, 'uploads'),
+//   keepExtensions: true
+// })))
 
-// app.use(bodyparser({
-//   enableTypes: ['json', 'form', 'text']
-// }))
+app.use(bodyparser({
+  enableTypes: ['json', 'form', 'text'],
+  formLimit: '1mb'
+}))
+
+
 
 // app.use(cors())
 app.use(json())
@@ -133,6 +155,7 @@ app.use(async (ctx, next) => {
 // app.use(users.routes(), users.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods());
 app.use(blog.routes(), blog.allowedMethods());
+app.use(auth.routes(), auth.allowedMethods());
 // require('./routes')(app)
 
 
