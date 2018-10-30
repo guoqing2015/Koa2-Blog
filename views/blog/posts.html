@@ -1,24 +1,48 @@
 {% extends 'blog/base.html' %}
 {% block body %}
-{% include "blog/components/header.html" %}
-<div class="container margin-top">
-    <div class="columns">
-        <div class="column is-8 is-offset-2">
-            <table class="table margin-top is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>title</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for post in posts %}
-                    <tr>
-                        <td>{{category.title}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+{# {% include "blog/components/header.html" %} #}
+<div id="main">
+   
+    <div id="content" role="main">
+        <ul class="articlemenu">
+                {% for post in posts %}
+            <li>
+                <a href="http://www.alloyteam.com/author/heyli/" class="test-loop animated tada" target="_blank"><img
+                        alt="TAT.heyli" src="http://www.alloyteam.com/wp-content/uploads/2015/04/lcxfs1991_avatar_1429622108.png"
+                        class="avatar avatar-43 photo" height="43" width="43"></a>
+
+                <a href="http://www.alloyteam.com/2018/09/13433/" class="blogTitle" rel="bookmark" target="_blank"
+                    title="小程序·云开发的云函数路由高级玩法">{{post.title}}</a>
+                <div class="blogPs"> In <a href="http://www.alloyteam.com/webdevelop/" rel="category tag">Web开发</a> on
+                    {{post.createdAt}} by <a href="http://www.alloyteam.com/author/heyli/" title="由TAT.heyli发布" rel="author">TAT.heyli</a>
+                    view: 689 </div>
+                <span class="comments"><a href="http://www.alloyteam.com/2018/09/13433/#respond" class="up">0</a></span>
+
+                <!--content_banner-->
+                <div class="content_banner">
+
+
+
+                    <div class="text">
+                        <blockquote>
+                            <p>
+                                李成熙，腾讯高级工程师，专注于性能优化、工程化和小程序服务。<a href="https://weibo.com/leehkfs/">微博</a> | <a href="https://www.zhihu.com/people/leehey/">知乎</a>
+                                | <a href="https://github.com/lcxfs1991">Github</a>
+                            </p>
+                        </blockquote>
+                        <h2>概念回顾</h2>
+                        <p>在掘金开发者大会上，在推荐实践那里，我有提到一种云函数的用法，我们可以将相同的一些操作，比如用户管理、支付逻辑，按照业务的相似性，归类到一个云函数里，这样比较方便管理、排查问题以及逻辑的共享。甚至如果你的小程序的后台逻辑不复杂，请求量不是特别大，完全可以在云函数里面做一个单一的微服务，根据路由来处理任务。</p>
+                    </div>
+                </div>
+                <!--toolBar-->
+                <div class="toolBar">
+                    <p>
+                        <a href="http://www.alloyteam.com/2018/09/13433/" class="more">继续阅读</a>
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

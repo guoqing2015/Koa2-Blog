@@ -414,9 +414,9 @@ pre {
   display: block;
   max-width: 100%;
   margin: auto auto 4px;
-  -moz-box-sizing: border-box;
+  /* -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+          box-sizing: border-box; */
 }
 .post-content figure figcaption {
   position: relative;
@@ -522,9 +522,9 @@ pre {
   border-spacing: 0;
   margin-bottom: 1.5em;
   font-size: 0.96em;
-  -moz-box-sizing: border-box;
+  /* -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+          box-sizing: border-box; */
 }
 .post-content th,
 .post-content td {
