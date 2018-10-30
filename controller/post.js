@@ -16,14 +16,26 @@ exports.getRedirectPosts = async ctx => {
  */
 exports.getPosts = async (ctx) => {
   try {
-    let page = ctx.query.body.page;
-    const res = await Post.findPostByUserPage(page);
-    ctx.render('blog/posts', {
+    let page = ctx.params.page;
+    const limit = 10;
+    var pages = 0;
+    const result = await Post.getPostsAndCount(page, 10);
+    var count = result.count;
+    pages = Math.ceil(count / limit); //向上取整
+    const posts = result.rows;
+    for (let post of posts) {
+      post.create_time = moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss");
+      let postCategory = await Category.getCategoryById(post.category_id);
+      post.category = postCategory;
+    }
+    await ctx.render('blog/posts.html', {
       session: ctx.session,
-      posts: res,
-      postsLength: postCount,
-      postsPageLength: Math.ceil(postCount / 10),
-    })
+      posts: result.rows,
+      count: count,
+      page: page,
+      pages: pages,
+      limit: limit
+    });
   } catch (err) {
     ctx.body = {
       code: 500,
@@ -47,8 +59,8 @@ exports.getPosts = async (ctx) => {
 exports.createPost = async (ctx) => {
   try {
 
-    let title = ctx.body.title;
-    let content = ctx.body.content;
+    let title = ctx.request.body.title;
+    let content = ctx.request.body.content;
     if (!title) {
       await ctx.render('admin/error', {
         message: '文章标题不能为空'
@@ -56,9 +68,9 @@ exports.createPost = async (ctx) => {
       return;
     }
     const res = await Post.createNewPost({
-      title: ctx.body.title,
-      content: ctx.body.content,
-      category_id: ctx.body.category_id
+      title: ctx.request.body.title,
+      content: ctx.request.body.content,
+      category_id: ctx.request.body.category_id
     });
     await ctx.render('admin/success', {
       message: '文章新建成功',
@@ -77,9 +89,9 @@ exports.createPost = async (ctx) => {
 exports.editPost = async (ctx) => {
   try {
     let data = {
-      title: ctx.body.title,
-      content: ctx.body.content,
-      category_id: ctx.body.category_id,
+      title: ctx.request.body.title,
+      content: ctx.request.body.content,
+      category_id: ctx.request.body.category_id,
       id: ctx.query.id,
     };
     if (!data.id) {

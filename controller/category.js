@@ -9,7 +9,7 @@ const Category = require('../proxy/category');
 exports.createCategory = async (ctx) => {
   try {
  
-    let category_name = ctx.body.category_name
+    let category_name = ctx.request.body.category_name
     if (category_name == '') {
       await ctx.render('admin/error', {
         message: '名称不能为空！！！！！'
@@ -41,7 +41,7 @@ exports.editCategory = async (ctx) => {
   try {
     //提取基本信息
     let data = {
-      category_name: ctx.body.category_name,
+      category_name: ctx.request.body.category_name,
       id: ctx.query.id,
     };
     if (!data.id) {
