@@ -12,9 +12,10 @@ exports.getRedirectPosts = async ctx => {
 
 
 /**
- * 文章页
+ * 文章列表页
  */
 exports.getPosts = async (ctx) => {
+  console.log(ctx);
   try {
     let page = ctx.params.page;
     const limit = 10;
@@ -25,6 +26,7 @@ exports.getPosts = async (ctx) => {
     const posts = result.rows;
     for (let post of posts) {
       post.create_time = moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss");
+      post.update_time = moment(post.updatedAt).format("YYYY-MM-DD HH:mm:ss");
       let postCategory = await Category.getCategoryById(post.category_id);
       post.category = postCategory;
     }
@@ -44,8 +46,28 @@ exports.getPosts = async (ctx) => {
   }
 }
 
-
-
+/**
+ * 文章详情页
+ */
+exports.getPost = async (ctx) => {
+  try {
+    const id = ctx.query.id;
+    console.log('id', id )
+    const post = await Post.getPostById(id);
+    if (post) {
+      await ctx.render('blog/post.html', {
+        post
+      });
+    } else {
+      console.log('文章不存在')
+    }
+  } catch (err) {
+    ctx.body = {
+      code: 500,
+      err: err.message
+    }
+  }
+}
 
 
 
@@ -144,7 +166,7 @@ exports.deletePost = async (ctx) => {
 
 
 /**
- * 文章列表页面
+ * admin文章列表页面
  */
 exports.postListPage = async (ctx) => {
   try {
@@ -173,7 +195,7 @@ exports.postListPage = async (ctx) => {
 }
 
 /**
- * 文章列表页面
+ * admin文章新增页面
  */
 exports.postAddPage = async (ctx) => {
   try {
@@ -189,7 +211,7 @@ exports.postAddPage = async (ctx) => {
 
 
 /**
- * 文章列表页面
+ * admin文章编辑页面
  */
 exports.postEditPage = async (ctx) => {
   try {
